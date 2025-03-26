@@ -38,11 +38,12 @@ Node B is stopping packet processing.
 ```
 ## 🏗️ System Architecture
 
+```mermaid
 graph TD
     A[Node A] -->|Send Data| B[Node B]
     B -->|Send ACK| A
     B --> C[Packet Processor]
-
+```
 ### Key Components:
 1. **Node Class**: Represents each communication endpoint.
    - Sends and receives packets.
