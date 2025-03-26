@@ -1,21 +1,47 @@
 # Packet Transmission Simulation
 
-## Overview
-The **Packet Transmission Simulation** project simulates a basic communication protocol between two nodes, with error handling mechanisms such as packet loss, corruption, and retransmission. The simulation involves sending and receiving packets between nodes in a multithreaded environment, providing an insight into how network protocols might behave under conditions like packet loss and corruption.
+A C++ simulation of reliable packet transmission between network nodes with error handling and retransmission mechanisms.
 
----
+## 📌 Overview
 
-## Features
-- **Packet Loss Simulation**: Simulates 10% packet loss during transmission.
-- **Packet Corruption Simulation**: Simulates 5% packet corruption during transmission.
-- **Retransmission**: Retries sending the packet up to three times before failure.
-- **Multithreading**: Utilizes threads to process packet transmission and reception concurrently.
-- **Synchronization**: Implements thread synchronization using mutexes and condition variables to manage shared resources.
-- **Error Handling**: Handles runtime errors during transmission and processing.
+Simulates a basic communication protocol between two nodes with:
+- Packet loss simulation (10% probability)
+- Packet corruption simulation (5% probability)
+- Automatic retransmission (up to 3 attempts)
+- Multithreaded packet processing
+- ACK/NACK acknowledgment system
 
----
+## 🚀 Features
 
-## System Architecture
+| Feature | Description |
+|---------|-------------|
+| **Reliable Transmission** | Guarantees packet delivery with retransmission |
+| **Error Simulation** | Configurable packet loss and corruption rates |
+| **Multithreading** | Concurrent packet processing using threads |
+| **Sequence Tracking** | Maintains packet order with sequence numbers |
+| **ACK Mechanism** | Proper acknowledgment of received packets |
+
+## 📋 Example Output
+
+```plaintext
+Node A is sending DATA packet: Test (Seq: 1) to Node B (Attempt 1)
+Node B received DATA packet: Test (Seq: 1)
+Node B is sending ACK packet: ACK (Seq: 1) to Node A (Attempt 1)
+Node B is processing packet: Test (Seq: 1)
+Node A received ACK packet: ACK (Seq: 1)
+Node A is sending DATA packet: Packet (Seq: 2) to Node B (Attempt 1)
+Node B received DATA packet: Packet (Seq: 2)
+Node B is sending ACK packet: ACK (Seq: 2) to Node A (Attempt 1)
+Node B is processing packet: Packet (Seq: 2)
+Node A received ACK packet: ACK (Seq: 2)
+Node B is stopping packet processing.
+```
+## 🏗️ System Architecture
+
+graph TD
+    A[Node A] -->|Send Data| B[Node B]
+    B -->|Send ACK| A
+    B --> C[Packet Processor]
 
 ### Key Components:
 1. **Node Class**: Represents each communication endpoint.
@@ -70,7 +96,7 @@ The simulation includes error handling for the following scenarios:
 
 ---
 
-## Installation and Setup
+## 🛠️ Installation and Setup
 
 To run the simulation, follow these steps:
 
@@ -80,3 +106,32 @@ g++ main.cpp -o packet_transmission -std=c++11 -pthread
 ```sh
 ./packet_transmission
 ```
+
+## 📚 Node Class Documentation
+
+The `Node` class provides essential methods for handling network packet transmission and processing.
+
+## 📌 Methods
+
+| Method             | Description |
+|-------------------|------------------------------------------------|
+| `send()`         | Transmits a packet with built-in retry logic to ensure successful delivery. |
+| `receive()`      | Handles incoming packets and prepares them for processing. |
+| `processPackets()` | Processes received data and performs necessary operations. |
+| `stop()`         | Terminates packet processing, shutting down the node safely. |
+
+## 📘 Additional Notes
+- **`send()`**: Implements a retry mechanism to handle transmission failures.
+- **`receive()`**: Ensures that incoming data is correctly processed before forwarding.
+- **`processPackets()`**: May involve parsing, validation, or further data handling.
+- **`stop()`**: Gracefully stops all packet-related activities.
+
+## 🔧 Usage Example
+```python
+node = Node()
+node.send()
+node.receive()
+node.processPackets()
+node.stop()
+```
+
